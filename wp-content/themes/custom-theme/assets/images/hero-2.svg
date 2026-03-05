@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="720" viewBox="0 0 1920 720">
+  <rect width="1920" height="720" fill="#2d3a24"/>
+  <rect width="1920" height="720" fill="url(#grad2)"/>
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3a24;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#5c7a48;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <text x="960" y="340" font-family="serif" font-size="72" fill="rgba(248,242,230,0.6)" text-anchor="middle" dominant-baseline="middle">くりもと Hero 2</text>
+  <text x="960" y="420" font-family="serif" font-size="36" fill="rgba(248,242,230,0.4)" text-anchor="middle">群馬の江戸前手打ちそば</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
+  <rect width="600" height="450" fill="#ede6d6"/>
+  <rect x="0" y="0" width="600" height="450" fill="url(#mgrad)"/>
+  <defs>
+    <linearGradient id="mgrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a3b88e;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#7c9969;stop-opacity:0.8"/>
+    </linearGradient>
+  </defs>
+  <text x="300" y="200" font-family="serif" font-size="40" fill="rgba(44,44,44,0.6)" text-anchor="middle" dominant-baseline="middle">curry</text>
+  <text x="300" y="260" font-family="serif" font-size="24" fill="rgba(44,44,44,0.4)" text-anchor="middle">メニュー写真</text>
+</svg>

@@ -24,7 +24,20 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                silenceDeprecations: [
+                  'import',
+                  'global-builtin',
+                  'legacy-js-api',
+                  'color-functions',
+                  'strict-unary',
+                ],
+              },
+            },
+          },
         ],
       },
     ],

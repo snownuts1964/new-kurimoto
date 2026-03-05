@@ -1,0 +1,154 @@
+// =============================================================================
+// Typography - タイポグラフィ
+// =============================================================================
+
+h1 { font-size: $font-size-3xl; @include md { font-size: $font-size-4xl; } }
+h2 { font-size: $font-size-2xl; @include md { font-size: $font-size-3xl; } }
+h3 { font-size: $font-size-xl;  @include md { font-size: $font-size-2xl; } }
+h4 { font-size: $font-size-lg;  @include md { font-size: $font-size-xl;  } }
+h5 { font-size: $font-size-md; }
+h6 { font-size: $font-size-base; }
+
+// セクションタイトル（和風）
+.section-title {
+    @include section-title;
+}
+
+.section-subtitle {
+    @include section-subtitle;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: $spacing-12;
+
+    .section-title { margin-bottom: 0; }
+
+    p {
+        margin-top: $spacing-4;
+        color: $color-text-light;
+        font-size: $font-size-sm;
+        line-height: $line-height-relaxed;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+// エントリーコンテンツ本文スタイル
+.entry-content,
+.page-content {
+    line-height: $line-height-relaxed;
+
+    > * + * { margin-top: $spacing-5; }
+
+    h2 {
+        font-size: $font-size-xl;
+        margin-top: $spacing-12;
+        margin-bottom: $spacing-4;
+        @include title-accent-left;
+
+        @include md { font-size: $font-size-2xl; }
+    }
+
+    h3 {
+        font-size: $font-size-lg;
+        margin-top: $spacing-8;
+        margin-bottom: $spacing-3;
+        color: $color-text;
+    }
+
+    h4 {
+        font-size: $font-size-md;
+        margin-top: $spacing-6;
+        margin-bottom: $spacing-2;
+        font-weight: $font-weight-bold;
+    }
+
+    ul, ol {
+        padding-left: $spacing-6;
+        margin: $spacing-4 0;
+
+        li { margin-bottom: $spacing-2; }
+    }
+
+    blockquote {
+        margin: $spacing-6 0;
+        padding: $spacing-5 $spacing-6;
+        background-color: $color-primary-pale;
+        border-left: 4px solid $color-primary;
+        border-radius: 0 $radius-base $radius-base 0;
+        font-family: $font-secondary;
+        font-style: italic;
+        color: $color-text-light;
+
+        p { margin: 0; }
+        cite {
+            display: block;
+            margin-top: $spacing-2;
+            font-size: $font-size-sm;
+            font-style: normal;
+            color: $color-text-muted;
+        }
+    }
+
+    pre, code {
+        font-family: $font-mono;
+        font-size: $font-size-sm;
+        background-color: $color-bg-dark;
+        border-radius: $radius-base;
+    }
+    code { padding: 0.1em 0.4em; }
+    pre {
+        padding: $spacing-5;
+        overflow-x: auto;
+        code { padding: 0; background: none; }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: $spacing-6 0;
+        font-size: $font-size-sm;
+
+        th, td {
+            padding: $spacing-3 $spacing-4;
+            border: $border-width $border-style $color-border;
+            text-align: left;
+        }
+        th {
+            background-color: $color-bg-dark;
+            font-weight: $font-weight-bold;
+            font-family: $font-secondary;
+        }
+        tr:hover td { background-color: $color-bg; }
+    }
+
+    img {
+        border-radius: $radius-md;
+        box-shadow: $shadow-sm;
+    }
+
+    a {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover { color: $color-primary-dark; }
+    }
+
+    hr { @include bamboo-divider; }
+}
+
+// テキストユーティリティ
+.text-center  { text-align: center; }
+.text-left    { text-align: left; }
+.text-right   { text-align: right; }
+.text-muted   { color: $color-text-muted; }
+.text-light   { color: $color-text-light; }
+.text-primary { color: $color-primary; }
+.text-accent  { color: $color-accent; }
+.text-sm      { font-size: $font-size-sm; }
+.text-lg      { font-size: $font-size-lg; }
+.font-serif   { font-family: $font-secondary; }
+.font-sans    { font-family: $font-primary; }
+.font-bold    { font-weight: $font-weight-bold; }

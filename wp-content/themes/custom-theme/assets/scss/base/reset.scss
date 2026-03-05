@@ -1,0 +1,106 @@
+// =============================================================================
+// Reset - ベースリセット
+// =============================================================================
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-regular;
+    line-height: $line-height-base;
+    color: $color-text;
+    background-color: $color-bg;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: $letter-spacing-normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 $spacing-4;
+    font-family: $font-secondary;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    color: $color-text;
+    letter-spacing: $letter-spacing-wide;
+}
+
+p { margin: 0 0 $spacing-4; }
+p:last-child { margin-bottom: 0; }
+
+a {
+    color: $color-primary;
+    text-decoration: none;
+    transition: color $transition-base;
+
+    &:hover { color: $color-primary-dark; }
+}
+
+img, video, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul, ol {
+    margin: 0 0 $spacing-4;
+    padding-left: $spacing-6;
+}
+
+li { margin-bottom: $spacing-1; }
+
+button {
+    cursor: pointer;
+    font-family: $font-primary;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+input, textarea, select {
+    font-family: $font-primary;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+strong, b { font-weight: $font-weight-bold; }
+em, i { font-style: italic; }
+
+// WordPress アラインメント
+.alignleft  { float: left; margin-right: $spacing-6; margin-bottom: $spacing-4; }
+.alignright { float: right; margin-left: $spacing-6; margin-bottom: $spacing-4; }
+.aligncenter { display: block; margin: 0 auto $spacing-4; text-align: center; }
+.alignwide   { max-width: 1024px; margin-left: auto; margin-right: auto; }
+.alignfull   { max-width: 100%; margin-left: 0; margin-right: 0; }
+
+// スクリーンリーダー
+.screen-reader-text { @include visually-hidden; }
+
+// クリアフィックス
+.clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+// 選択テキスト
+::selection {
+    background-color: rgba($color-primary, 0.25);
+    color: $color-text;
+}
+
+// スクロールバー
+body { @include scrollbar($color-primary); }

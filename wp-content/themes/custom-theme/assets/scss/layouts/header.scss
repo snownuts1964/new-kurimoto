@@ -1,0 +1,439 @@
+// =============================================================================
+// Header - ヘッダー（くりもとスタイル）
+// =============================================================================
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-sticky;
+    background-color: rgba($color-white, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid transparent;
+    transition: border-color $transition-base, box-shadow $transition-base, background-color $transition-base;
+
+    &.is-scrolled {
+        border-bottom-color: $color-border;
+        box-shadow: 0 2px 20px rgba(44, 44, 44, 0.08);
+    }
+
+    // スクロール前：ヒーロー上部では透明ヘッダー
+    &.is-transparent {
+        background-color: transparent;
+        border-bottom-color: transparent;
+
+        .site-branding__name { color: $color-white; }
+        .nav-link { color: rgba($color-white, 0.9); }
+        .header-contact { color: rgba($color-white, 0.8); }
+        .menu-toggle .bar { background-color: $color-white; }
+    }
+}
+
+// ヘッダー内レイアウト
+.header-inner {
+    @include container;
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-6;
+
+    @include max-md {
+        height: $header-height-sm;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ブランディング（ロゴ）
+// -----------------------------------------------------------------------------
+.site-branding {
+    flex-shrink: 0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+
+    &__logo {
+        height: 48px;
+        width: auto;
+
+        @include max-md { height: 36px; }
+    }
+
+    &__name {
+        font-family: $font-secondary;
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+        color: $color-text;
+        line-height: $line-height-tight;
+        letter-spacing: $letter-spacing-wide;
+        transition: color $transition-base;
+
+        small {
+            display: block;
+            font-size: $font-size-xs;
+            font-family: $font-primary;
+            font-weight: $font-weight-regular;
+            color: $color-text-muted;
+            letter-spacing: $letter-spacing-widest;
+            margin-top: 2px;
+        }
+    }
+
+    &:hover .site-branding__name { color: $color-primary; }
+}
+
+// -----------------------------------------------------------------------------
+// ヘッダー右エリア（電話 + ナビ）
+// -----------------------------------------------------------------------------
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-6;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+// 電話番号
+.header-contact {
+    display: none;
+    align-items: center;
+    gap: $spacing-2;
+    font-family: $font-secondary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+    text-decoration: none;
+    letter-spacing: $letter-spacing-tight;
+    transition: color $transition-base;
+
+    @include lg { display: flex; }
+
+    svg { color: $color-primary; flex-shrink: 0; }
+
+    &:hover { color: $color-primary; }
+
+    small {
+        display: block;
+        font-family: $font-primary;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-regular;
+        color: $color-text-muted;
+        letter-spacing: $letter-spacing-wide;
+        line-height: 1;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// デスクトップナビゲーション
+// -----------------------------------------------------------------------------
+.main-navigation {
+    display: none;
+
+    @include lg { display: block; }
+}
+
+.nav-menu {
+    @include reset-list;
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+
+    > li {
+        position: relative;
+
+        &.current-menu-item > a,
+        &.current_page_item > a {
+            color: $color-primary;
+
+            &::after { transform: scaleX(1); }
+        }
+    }
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text;
+    text-decoration: none;
+    letter-spacing: $letter-spacing-wide;
+    border-radius: $radius-base;
+    position: relative;
+    transition: color $transition-base, background-color $transition-base;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: $spacing-4;
+        right: $spacing-4;
+        height: 2px;
+        background-color: $color-primary;
+        border-radius: $radius-full;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform $transition-base;
+    }
+
+    &:hover {
+        color: $color-primary;
+        background-color: $color-primary-pale;
+
+        &::after { transform: scaleX(1); }
+    }
+}
+
+// ドロップダウン
+.nav-menu .menu-item-has-children {
+    .sub-menu {
+        @include reset-list;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        min-width: 200px;
+        background-color: $color-white;
+        border-radius: $radius-lg;
+        box-shadow: $shadow-lg;
+        border: $border-width $border-style $color-border;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: all $transition-base;
+        z-index: $z-dropdown;
+
+        li { border-bottom: $border-width $border-style $color-bg; }
+        li:last-child { border-bottom: none; }
+
+        a {
+            display: block;
+            padding: $spacing-3 $spacing-5;
+            font-size: $font-size-sm;
+            color: $color-text;
+            text-decoration: none;
+            transition: background-color $transition-base, color $transition-base;
+
+            &:hover {
+                background-color: $color-primary-pale;
+                color: $color-primary;
+            }
+        }
+    }
+
+    &:hover .sub-menu,
+    &:focus-within .sub-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ハンバーガーボタン
+// -----------------------------------------------------------------------------
+.menu-toggle {
+    @include btn-reset;
+    @include flex-center;
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-base;
+    border: 1px solid $color-border;
+    flex-direction: column;
+    gap: 5px;
+    padding: $spacing-2;
+    transition: background-color $transition-base, border-color $transition-base;
+    flex-shrink: 0;
+
+    @include lg { display: none; }
+
+    .bar {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: $color-text;
+        border-radius: $radius-full;
+        transition: transform $transition-base, opacity $transition-base, width $transition-base;
+        transform-origin: center;
+    }
+
+    &:hover {
+        background-color: $color-primary-pale;
+        border-color: $color-primary;
+        .bar { background-color: $color-primary; }
+    }
+
+    &.is-active {
+        background-color: $color-primary-pale;
+        border-color: $color-primary;
+
+        .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); background-color: $color-primary; }
+        .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background-color: $color-primary; }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// モバイルメニュー
+// -----------------------------------------------------------------------------
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(340px, 85vw);
+    height: 100dvh;
+    background-color: $color-white;
+    z-index: $z-overlay;
+    overflow-y: auto;
+    transition: right $transition-slow;
+    box-shadow: -4px 0 32px rgba(44, 44, 44, 0.15);
+    display: flex;
+    flex-direction: column;
+
+    @include scrollbar;
+
+    &.is-open { right: 0; }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing-5 $spacing-6;
+        border-bottom: $border-width $border-style $color-border;
+        background-color: $color-bg;
+    }
+
+    &__title {
+        font-family: $font-secondary;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $color-text-muted;
+        letter-spacing: $letter-spacing-widest;
+    }
+
+    &__close {
+        @include btn-reset;
+        @include flex-center;
+        width: 36px;
+        height: 36px;
+        border-radius: $radius-base;
+        color: $color-text-light;
+        transition: color $transition-base, background-color $transition-base;
+
+        &:hover {
+            color: $color-primary;
+            background-color: $color-primary-pale;
+        }
+    }
+
+    &__nav {
+        flex: 1;
+        padding: $spacing-4 0;
+    }
+
+    &__footer {
+        padding: $spacing-6;
+        border-top: $border-width $border-style $color-border;
+        background-color: $color-bg;
+
+        .mobile-contact {
+            display: flex;
+            align-items: center;
+            gap: $spacing-3;
+            text-decoration: none;
+            color: $color-text;
+
+            svg { color: $color-primary; }
+
+            span {
+                font-family: $font-secondary;
+                font-size: $font-size-xl;
+                font-weight: $font-weight-bold;
+                letter-spacing: $letter-spacing-tight;
+            }
+
+            small {
+                display: block;
+                font-family: $font-primary;
+                font-size: $font-size-xs;
+                color: $color-text-muted;
+                letter-spacing: $letter-spacing-wide;
+            }
+        }
+    }
+}
+
+// モバイルナビリンク
+.mobile-nav-list {
+    @include reset-list;
+}
+
+.mobile-nav-item {
+    border-bottom: $border-width $border-style $color-border;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing-4 $spacing-6;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        color: $color-text;
+        text-decoration: none;
+        letter-spacing: $letter-spacing-wide;
+        transition: background-color $transition-base, color $transition-base;
+
+        &:hover,
+        &:focus {
+            background-color: $color-primary-pale;
+            color: $color-primary;
+        }
+
+        svg { color: $color-text-muted; flex-shrink: 0; }
+    }
+
+    &.current-menu-item > a,
+    &.current_page_item > a {
+        color: $color-primary;
+        background-color: $color-primary-pale;
+        font-weight: $font-weight-bold;
+    }
+
+    .sub-menu {
+        @include reset-list;
+        background-color: $color-bg;
+        display: none;
+
+        &.is-open { display: block; }
+
+        li a {
+            padding: $spacing-3 $spacing-8;
+            font-size: $font-size-sm;
+            color: $color-text-light;
+        }
+    }
+}
+
+// オーバーレイ
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba($color-black, 0.5);
+    z-index: calc(#{$z-overlay} - 1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-slow;
+    backdrop-filter: blur(2px);
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+// ヘッダー分のオフセット
+.admin-bar .site-header { top: 32px; }

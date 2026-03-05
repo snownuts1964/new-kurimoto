@@ -1,0 +1,137 @@
+// =============================================================================
+// Buttons - ボタン
+// =============================================================================
+
+.btn {
+    @include btn-base;
+    @include focus-ring;
+    gap: $spacing-2;
+
+    // サイズ
+    &--sm { @include btn-base($spacing-2, $spacing-5); font-size: $font-size-xs; }
+    &--lg { @include btn-base($spacing-4, $spacing-10); font-size: $font-size-md; letter-spacing: $letter-spacing-wider; }
+    &--full { width: 100%; }
+
+    // バリアント：竹色プライマリ
+    &--primary {
+        @include btn-variant($color-primary, $color-white, $color-primary, $color-primary-dark);
+        box-shadow: 0 2px 8px rgba($color-primary, 0.3);
+
+        &:hover {
+            box-shadow: 0 4px 16px rgba($color-primary, 0.4);
+            transform: translateY(-1px);
+        }
+    }
+
+    // バリアント：藍色アクセント
+    &--accent {
+        @include btn-variant($color-accent, $color-white, $color-accent, $color-accent-dark);
+        box-shadow: 0 2px 8px rgba($color-accent, 0.3);
+    }
+
+    // アウトライン：竹色
+    &--outline {
+        @include btn-variant(transparent, $color-primary, $color-primary);
+        border-width: 2px;
+
+        &:hover {
+            background-color: $color-primary;
+            color: $color-white;
+        }
+    }
+
+    // アウトライン：白（ダーク背景用）
+    &--outline-white {
+        @include btn-variant(transparent, $color-white, $color-white);
+        border-width: 2px;
+
+        &:hover {
+            background-color: $color-white;
+            color: $color-primary;
+        }
+    }
+
+    // ゴースト
+    &--ghost {
+        @include btn-variant(transparent, $color-text-light, transparent);
+
+        &:hover {
+            background-color: $color-bg-dark;
+            color: $color-text;
+        }
+    }
+
+    // テキストリンク
+    &--text {
+        @include btn-variant(transparent, $color-primary, transparent);
+        padding-left: 0;
+        padding-right: 0;
+        gap: $spacing-2;
+
+        &::after {
+            content: '→';
+            transition: transform $transition-base;
+        }
+
+        &:hover::after { transform: translateX(4px); }
+    }
+}
+
+// 詳細リンクボタン（和風「もっと見る」スタイル）
+.btn-more {
+    @include btn-base($spacing-3, $spacing-8);
+    @include btn-variant(transparent, $color-primary, $color-primary);
+    border-width: 1px;
+    border-radius: $radius-full;
+    font-size: $font-size-sm;
+    letter-spacing: $letter-spacing-wide;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: $color-primary;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform $transition-base;
+        z-index: 0;
+    }
+
+    span { position: relative; z-index: 1; }
+
+    &:hover {
+        color: $color-white;
+        &::before { transform: scaleX(1); transform-origin: left; }
+    }
+}
+
+// WordPress 標準ボタン
+.wp-block-button__link,
+.comment-form .submit,
+.search-submit {
+    @include btn-base;
+    @include btn-variant($color-primary, $color-white, $color-primary, $color-primary-dark);
+}
+
+// ページネーション
+.page-numbers {
+    @include btn-base($spacing-2, $spacing-4);
+    @include btn-variant($color-white, $color-text-light, $color-border);
+    border-radius: $radius-base;
+    min-width: 40px;
+    font-size: $font-size-sm;
+
+    &.current {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: $color-primary;
+    }
+
+    &:hover:not(.current) {
+        background-color: $color-bg-dark;
+        border-color: $color-primary;
+        color: $color-primary;
+    }
+}

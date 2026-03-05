@@ -1,0 +1,231 @@
+// =============================================================================
+// Footer - フッター（くりもとスタイル）
+// =============================================================================
+
+.site-footer {
+    background-color: $color-footer-bg;
+    color: $color-footer-text;
+}
+
+// フッター上部（ウィジェットエリア）
+.footer-top {
+    padding: $spacing-16 0 $spacing-12;
+    border-bottom: 1px solid rgba($color-white, 0.08);
+
+    .container {
+        @include container;
+        display: grid;
+        gap: $spacing-10;
+        grid-template-columns: 1fr;
+
+        @include md { grid-template-columns: 2fr 1fr 1fr; }
+        @include lg { grid-template-columns: 2.5fr 1fr 1fr 1fr; }
+    }
+}
+
+// フッターブランドカラム
+.footer-brand {
+    &__name {
+        font-family: $font-secondary;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-white;
+        letter-spacing: $letter-spacing-wide;
+        margin-bottom: $spacing-2;
+
+        small {
+            display: block;
+            font-family: $font-primary;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-regular;
+            color: $color-footer-link;
+            letter-spacing: $letter-spacing-widest;
+            margin-top: $spacing-1;
+        }
+    }
+
+    &__tagline {
+        font-family: $font-secondary;
+        font-size: $font-size-sm;
+        font-style: italic;
+        color: $color-footer-link;
+        margin: $spacing-3 0 $spacing-5;
+        line-height: $line-height-relaxed;
+    }
+
+    &__contact {
+        a {
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+            color: $color-white;
+            text-decoration: none;
+            font-family: $font-secondary;
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            transition: color $transition-base;
+
+            &:hover { color: $color-primary-light; }
+
+            svg { color: $color-primary-light; }
+        }
+
+        small {
+            display: block;
+            font-family: $font-primary;
+            font-size: $font-size-xs;
+            color: $color-footer-link;
+            margin-top: $spacing-1;
+            letter-spacing: $letter-spacing-wide;
+        }
+    }
+
+    &__address {
+        margin-top: $spacing-5;
+        font-size: $font-size-sm;
+        color: $color-footer-link;
+        line-height: $line-height-relaxed;
+
+        p { margin: 0; }
+    }
+}
+
+// フッターウィジェットカラム
+.footer-widget {
+    &__title {
+        font-family: $font-secondary;
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: $color-white;
+        letter-spacing: $letter-spacing-wide;
+        margin-bottom: $spacing-5;
+        padding-bottom: $spacing-3;
+        border-bottom: 1px solid rgba($color-primary, 0.4);
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 32px;
+            height: 2px;
+            background-color: $color-primary;
+        }
+    }
+
+    ul {
+        @include reset-list;
+
+        li {
+            padding: $spacing-2 0;
+            border-bottom: 1px solid rgba($color-white, 0.05);
+
+            &:last-child { border-bottom: none; }
+        }
+
+        a {
+            font-size: $font-size-sm;
+            color: $color-footer-link;
+            text-decoration: none;
+            transition: color $transition-base, padding-left $transition-base;
+            display: flex;
+            align-items: center;
+            gap: $spacing-2;
+
+            &::before {
+                content: '›';
+                color: $color-primary-light;
+                font-size: $font-size-md;
+                line-height: 1;
+            }
+
+            &:hover {
+                color: $color-white;
+                padding-left: $spacing-2;
+            }
+        }
+    }
+}
+
+// フッター下部（コピーライト）
+.footer-bottom {
+    padding: $spacing-6 0;
+
+    .container {
+        @include container;
+        @include flex(row, space-between, center, wrap);
+        gap: $spacing-4;
+    }
+}
+
+.footer-nav {
+    ul {
+        @include reset-list;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-1;
+
+        a {
+            font-size: $font-size-xs;
+            color: $color-footer-link;
+            text-decoration: none;
+            padding: $spacing-1 $spacing-2;
+            border-radius: $radius-sm;
+            transition: color $transition-base;
+            letter-spacing: $letter-spacing-wide;
+
+            &:hover { color: $color-white; }
+        }
+    }
+}
+
+.footer-copyright {
+    font-size: $font-size-xs;
+    color: rgba($color-footer-link, 0.7);
+    letter-spacing: $letter-spacing-wide;
+}
+
+// フッターウィジェットエリア（WordPress）
+.footer-widgets {
+    .widget { color: $color-footer-link; }
+}
+
+// バックトゥトップ
+.back-to-top {
+    position: fixed;
+    bottom: $spacing-8;
+    right: $spacing-8;
+    z-index: $z-toast;
+    @include btn-reset;
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background-color: $color-primary;
+    color: $color-white;
+    border-radius: 50%;
+    box-shadow: 0 4px 16px rgba($color-primary, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: all $transition-base;
+
+    @include max-md {
+        bottom: $spacing-5;
+        right: $spacing-5;
+        width: 40px;
+        height: 40px;
+    }
+
+    &.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    &:hover {
+        background-color: $color-primary-dark;
+        box-shadow: 0 6px 20px rgba($color-primary, 0.5);
+        transform: translateY(-3px);
+    }
+}

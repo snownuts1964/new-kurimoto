@@ -1,0 +1,26 @@
+// =============================================================================
+// Main SCSS - くりもとカスタムテーマ エントリーポイント
+// =============================================================================
+
+// 1. 設計変数（最初にロード）
+@import 'variables';
+
+// 2. ミックスイン
+@import 'mixins';
+
+// 3. ベース
+@import 'base/reset';
+@import 'base/typography';
+
+// 4. コンポーネント
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+
+// 5. レイアウト
+@import 'layouts/grid';
+@import 'layouts/hero';
+@import 'layouts/home';
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/sidebar';

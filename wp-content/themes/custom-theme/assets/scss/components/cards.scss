@@ -1,0 +1,259 @@
+// =============================================================================
+// Cards - カード（メニュー・ブログ・一般）
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// 投稿カード（ブログ）
+// -----------------------------------------------------------------------------
+.post-card {
+    @include card;
+    background-color: $color-white;
+    display: flex;
+    flex-direction: column;
+
+    &__image {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-slow;
+        }
+
+        .post-card__category {
+            position: absolute;
+            top: $spacing-3;
+            left: $spacing-3;
+        }
+    }
+
+    &:hover .post-card__image img {
+        transform: scale(1.06);
+    }
+
+    &__body {
+        padding: $spacing-5 $spacing-6;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__category {
+        display: inline-block;
+        padding: $spacing-1 $spacing-3;
+        background-color: $color-primary;
+        color: $color-white;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        letter-spacing: $letter-spacing-wide;
+        border-radius: $radius-full;
+        margin-bottom: $spacing-3;
+        text-decoration: none;
+        transition: background-color $transition-base;
+
+        &:hover { background-color: $color-primary-dark; }
+    }
+
+    &__title {
+        font-family: $font-secondary;
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+        color: $color-text;
+        margin-bottom: $spacing-3;
+        line-height: $line-height-tight;
+        @include text-clamp(2);
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover { color: $color-primary; }
+        }
+    }
+
+    &__excerpt {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        line-height: $line-height-relaxed;
+        @include text-clamp(3);
+        margin-bottom: $spacing-4;
+        flex: 1;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        font-size: $font-size-xs;
+        color: $color-text-muted;
+        padding-top: $spacing-4;
+        border-top: $border-width $border-style $color-border;
+        margin-top: auto;
+
+        svg { flex-shrink: 0; }
+
+        time { display: flex; align-items: center; gap: $spacing-1; }
+    }
+
+    // 画像なしカード
+    &--no-image {
+        .post-card__body { padding-top: $spacing-6; }
+    }
+
+    // 横並びカード
+    &--horizontal {
+        flex-direction: row;
+
+        .post-card__image {
+            width: 160px;
+            flex-shrink: 0;
+            aspect-ratio: 1;
+        }
+
+        .post-card__body {
+            padding: $spacing-4 $spacing-5;
+        }
+
+        .post-card__title {
+            font-size: $font-size-base;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// メニューカード（店主のオススメ）
+// -----------------------------------------------------------------------------
+.menu-card {
+    background-color: $color-white;
+    border-radius: $radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-card;
+    transition: transform $transition-base, box-shadow $transition-base;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: $shadow-xl;
+        color: inherit;
+    }
+
+    &__image {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-slow;
+        }
+
+        .menu-card__badge {
+            position: absolute;
+            bottom: $spacing-3;
+            right: $spacing-3;
+        }
+    }
+
+    &:hover &__image img {
+        transform: scale(1.08);
+    }
+
+    &__body {
+        padding: $spacing-5 $spacing-6 $spacing-6;
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-1;
+        padding: $spacing-1 $spacing-3;
+        background-color: $color-accent;
+        color: $color-white;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        border-radius: $radius-full;
+        letter-spacing: $letter-spacing-wide;
+    }
+
+    &__name {
+        font-family: $font-secondary;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-text;
+        margin-bottom: $spacing-2;
+        letter-spacing: $letter-spacing-wide;
+    }
+
+    &__desc {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        line-height: $line-height-relaxed;
+        @include text-clamp(2);
+        margin-bottom: $spacing-4;
+    }
+
+    &__price {
+        font-family: $font-secondary;
+        font-size: $font-size-xl;
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+        letter-spacing: $letter-spacing-tight;
+
+        small {
+            font-size: $font-size-sm;
+            color: $color-text-muted;
+            font-weight: $font-weight-regular;
+            font-family: $font-primary;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// こだわりカード（特徴紹介）
+// -----------------------------------------------------------------------------
+.feature-card {
+    text-align: center;
+    padding: $spacing-10 $spacing-6;
+    background-color: $color-white;
+    border-radius: $radius-xl;
+    border: $border-width $border-style $color-border;
+    transition: border-color $transition-base, box-shadow $transition-base;
+
+    &:hover {
+        border-color: $color-primary;
+        box-shadow: $shadow-card;
+    }
+
+    &__icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto $spacing-5;
+        background-color: $color-primary-pale;
+        border-radius: 50%;
+        @include flex-center;
+
+        svg, img { color: $color-primary; }
+    }
+
+    &__title {
+        font-family: $font-secondary;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $color-text;
+        margin-bottom: $spacing-3;
+        letter-spacing: $letter-spacing-wide;
+    }
+
+    &__text {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        line-height: $line-height-relaxed;
+    }
+}

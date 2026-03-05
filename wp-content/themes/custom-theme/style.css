@@ -1,0 +1,18 @@
+/*
+Theme Name:  Kurimoto Custom Theme
+Theme URI:   https://kurimoto.jyoushu.com/
+Author:      Agiterra Design
+Author URI:  https://agiterra.com/
+Description: 群馬の江戸前手打ちそば くりもと — 竹色とアイボリーを基調とした和モダンWordPressテーマ
+Version:     2.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License:     GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: custom-theme
+Tags: japanese, restaurant, soba, responsive, custom-menu
+*/
+
+/* ビルド済み CSS をロード */
+@import url('./dist/css/main.css');
