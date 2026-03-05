@@ -1,0 +1,13 @@
+wp-config.php
+wp-content/uploads/
+wp-content/backup-*
+wp-content/cache/
+dist/
+node_modules/
+package-lock.json
+.DS_Store
+logs/
+*.log
+.env
+.vscode/
+.idea/
