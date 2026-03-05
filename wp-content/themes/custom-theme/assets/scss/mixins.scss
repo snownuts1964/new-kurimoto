@@ -1,0 +1,351 @@
+// =============================================================================
+// Mixins - 再利用可能なミックスイン
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// レスポンシブ（ブレークポイント）
+// -----------------------------------------------------------------------------
+@mixin respond-to($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    } @else if type-of($breakpoint) == number {
+        @media (min-width: $breakpoint) {
+            @content;
+        }
+    }
+}
+
+@mixin respond-below($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: #{map-get($breakpoints, $breakpoint) - 1px}) {
+            @content;
+        }
+    }
+}
+
+@mixin respond-between($min, $max) {
+    @media (min-width: map-get($breakpoints, $min)) and (max-width: #{map-get($breakpoints, $max) - 1px}) {
+        @content;
+    }
+}
+
+// モバイルファースト省略形
+@mixin sm { @include respond-to('sm') { @content; } }
+@mixin md { @include respond-to('md') { @content; } }
+@mixin lg { @include respond-to('lg') { @content; } }
+@mixin xl { @include respond-to('xl') { @content; } }
+@mixin xxl { @include respond-to('xxl') { @content; } }
+
+// -----------------------------------------------------------------------------
+// フレックスボックス
+// -----------------------------------------------------------------------------
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// -----------------------------------------------------------------------------
+// グリッド
+// -----------------------------------------------------------------------------
+@mixin grid($columns: 12, $gap: $grid-gap) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: $gap;
+}
+
+@mixin grid-auto($min-width: 250px, $gap: $grid-gap) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+    gap: $gap;
+}
+
+// -----------------------------------------------------------------------------
+// タイポグラフィ
+// -----------------------------------------------------------------------------
+@mixin font-size($size, $line-height: null) {
+    font-size: $size;
+    @if $line-height {
+        line-height: $line-height;
+    }
+}
+
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@mixin heading-style {
+    font-family: $font-secondary;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    letter-spacing: $letter-spacing-tight;
+}
+
+// -----------------------------------------------------------------------------
+// ボタン
+// -----------------------------------------------------------------------------
+@mixin btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+}
+
+@mixin btn-base($padding-y: $spacing-3, $padding-x: $spacing-6) {
+    @include btn-reset;
+    padding: $padding-y $padding-x;
+    border-radius: $radius-base;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
+    line-height: 1;
+    transition: all $transition-base;
+    gap: $spacing-2;
+
+    &:disabled,
+    &[aria-disabled="true"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+@mixin btn-variant($bg, $color, $border: transparent, $hover-bg: null, $hover-color: null) {
+    background-color: $bg;
+    color: $color;
+    border: 1px solid $border;
+
+    @if $hover-bg {
+        &:hover,
+        &:focus-visible {
+            background-color: $hover-bg;
+            @if $hover-color {
+                color: $hover-color;
+            } @else {
+                color: $color;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// フォーム
+// -----------------------------------------------------------------------------
+@mixin input-base {
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    border: $border-width $border-style $color-border;
+    border-radius: $radius-base;
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    line-height: $line-height-normal;
+    color: $color-text;
+    background-color: $color-white;
+    transition: border-color $transition-base, box-shadow $transition-base;
+    appearance: none;
+
+    &::placeholder {
+        color: $color-text-muted;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    }
+
+    &:disabled {
+        background-color: $color-gray-100;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// カード
+// -----------------------------------------------------------------------------
+@mixin card($padding: $spacing-6, $radius: $radius-lg) {
+    background-color: $color-white;
+    border-radius: $radius;
+    box-shadow: $shadow-md;
+    padding: $padding;
+    overflow: hidden;
+}
+
+// -----------------------------------------------------------------------------
+// コンテナ
+// -----------------------------------------------------------------------------
+@mixin container($max-width: $container-max-width) {
+    width: 100%;
+    max-width: $max-width;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: $container-padding;
+    padding-left: $container-padding;
+
+    @include md {
+        padding-right: $container-padding-md;
+        padding-left: $container-padding-md;
+    }
+
+    @include lg {
+        padding-right: $container-padding-lg;
+        padding-left: $container-padding-lg;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ビジュアル
+// -----------------------------------------------------------------------------
+@mixin aspect-ratio($width, $height) {
+    position: relative;
+    &::before {
+        content: '';
+        display: block;
+        padding-top: percentage($height / $width);
+    }
+    > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@mixin cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+// オーバーレイ
+@mixin overlay($color: rgba(0, 0, 0, 0.5)) {
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: $color;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// アクセシビリティ
+// -----------------------------------------------------------------------------
+@mixin visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@mixin focus-ring($color: $color-primary, $offset: 2px) {
+    &:focus-visible {
+        outline: 2px solid $color;
+        outline-offset: $offset;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// スクロールバー
+// -----------------------------------------------------------------------------
+@mixin scrollbar($width: 6px, $track: $color-gray-100, $thumb: $color-gray-400) {
+    &::-webkit-scrollbar {
+        width: $width;
+        height: $width;
+    }
+    &::-webkit-scrollbar-track {
+        background: $track;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $thumb;
+        border-radius: $radius-full;
+        &:hover {
+            background: darken($thumb, 10%);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// トランジション
+// -----------------------------------------------------------------------------
+@mixin transition($properties...) {
+    $transitions: ();
+    @each $prop in $properties {
+        $transitions: append($transitions, $prop $transition-base, comma);
+    }
+    transition: $transitions;
+}
+
+// -----------------------------------------------------------------------------
+// ユーティリティ
+// -----------------------------------------------------------------------------
+@mixin clearfix {
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin reset-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    @if $top    != null { top: $top; }
+    @if $right  != null { right: $right; }
+    @if $bottom != null { bottom: $bottom; }
+    @if $left   != null { left: $left; }
+}
+
+@mixin absolute($args...) { @include position(absolute, $args...); }
+@mixin fixed($args...)    { @include position(fixed, $args...); }
+@mixin sticky($args...)   { @include position(sticky, $args...); }

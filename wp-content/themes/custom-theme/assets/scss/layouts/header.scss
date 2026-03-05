@@ -1,0 +1,348 @@
+// =============================================================================
+// Header - サイトヘッダー
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// ヘッダー全体
+// -----------------------------------------------------------------------------
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: $z-header;
+    background-color: $color-header-bg;
+    border-bottom: $border-width $border-style $color-border;
+    box-shadow: $shadow-sm;
+    height: $header-height;
+    @include flex(row, flex-start, center);
+    transition: box-shadow $transition-base, background-color $transition-base;
+
+    @include md {
+        height: $header-height-md;
+    }
+
+    // スクロール時のスタイル
+    &.is-scrolled {
+        box-shadow: $shadow-md;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ヘッダー内部レイアウト
+// -----------------------------------------------------------------------------
+.header-inner {
+    @include flex-between;
+    width: 100%;
+    gap: $spacing-4;
+}
+
+// -----------------------------------------------------------------------------
+// サイトブランディング
+// -----------------------------------------------------------------------------
+.site-branding {
+    flex-shrink: 0;
+
+    .site-logo {
+        a {
+            display: block;
+            line-height: 1;
+        }
+
+        img {
+            max-height: 40px;
+            width: auto;
+
+            @include md {
+                max-height: 50px;
+            }
+        }
+    }
+
+    .site-title {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        line-height: 1;
+        margin: 0;
+
+        a {
+            color: $color-header-text;
+            text-decoration: none;
+            transition: color $transition-base;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+    }
+
+    .site-description {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        margin: $spacing-1 0 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// メインナビゲーション
+// -----------------------------------------------------------------------------
+.main-navigation {
+    @include flex(row, flex-end, center);
+    gap: $spacing-4;
+    flex: 1;
+
+    // デスクトップメニュー
+    .nav-menu {
+        @include reset-list;
+        @include flex(row, flex-end, center);
+        gap: $spacing-1;
+        display: none;
+
+        @include lg {
+            display: flex;
+        }
+
+        > li {
+            position: relative;
+
+            > a {
+                display: block;
+                padding: $spacing-2 $spacing-3;
+                color: $color-header-text;
+                font-weight: $font-weight-medium;
+                font-size: $font-size-sm;
+                text-decoration: none;
+                border-radius: $radius-base;
+                transition: color $transition-base, background-color $transition-base;
+                white-space: nowrap;
+
+                &:hover {
+                    color: $color-primary;
+                    background-color: rgba($color-primary, 0.06);
+                }
+            }
+
+            // 現在のページ
+            &.current-menu-item > a,
+            &.current-page-ancestor > a,
+            &.current-menu-ancestor > a {
+                color: $color-primary;
+                font-weight: $font-weight-bold;
+            }
+
+            // サブメニュートリガー
+            &.menu-item-has-children {
+                > a::after {
+                    content: '';
+                    display: inline-block;
+                    width: 16px;
+                    height: 16px;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    vertical-align: middle;
+                    margin-left: $spacing-1;
+                    transition: transform $transition-base;
+                }
+
+                &:hover > a::after {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        // サブメニュー
+        .sub-menu {
+            @include reset-list;
+            position: absolute;
+            top: calc(100% + $spacing-2);
+            left: 0;
+            min-width: 200px;
+            background-color: $color-white;
+            border-radius: $radius-lg;
+            box-shadow: $shadow-lg;
+            border: $border-width $border-style $color-border;
+            padding: $spacing-2;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: opacity $transition-base, visibility $transition-base, transform $transition-base;
+            z-index: $z-dropdown;
+
+            li:hover > & {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            a {
+                display: block;
+                padding: $spacing-2 $spacing-3;
+                color: $color-text;
+                font-size: $font-size-sm;
+                text-decoration: none;
+                border-radius: $radius-md;
+                transition: color $transition-base, background-color $transition-base;
+
+                &:hover {
+                    color: $color-primary;
+                    background-color: rgba($color-primary, 0.06);
+                }
+            }
+        }
+
+        // サブメニューホバーで表示
+        li:hover > .sub-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ハンバーガーメニューボタン
+// -----------------------------------------------------------------------------
+.menu-toggle {
+    @include btn-reset;
+    @include flex(column, center, center);
+    gap: $spacing-1;
+    padding: $spacing-2;
+    border-radius: $radius-base;
+    cursor: pointer;
+    transition: background-color $transition-base;
+    color: $color-header-text;
+
+    @include lg {
+        display: none;
+    }
+
+    &:hover {
+        background-color: $color-gray-100;
+    }
+
+    &__text {
+        font-size: 10px;
+        font-weight: $font-weight-medium;
+        letter-spacing: $letter-spacing-wider;
+    }
+}
+
+.hamburger {
+    @include flex-column;
+    gap: 5px;
+    width: 24px;
+
+    &__line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        border-radius: $radius-full;
+        transition: transform $transition-base, opacity $transition-base, width $transition-base;
+        transform-origin: center;
+    }
+}
+
+// アクティブ状態（✕）
+.menu-toggle.is-active {
+    .hamburger__line {
+        &:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        &:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        &:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// モバイルメニュー
+// -----------------------------------------------------------------------------
+.mobile-menu {
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $color-white;
+    z-index: $z-header - 1;
+    overflow-y: auto;
+    padding: $spacing-4;
+    transform: translateX(-100%);
+    transition: transform $transition-slow;
+    @include scrollbar;
+
+    @include md {
+        top: $header-height-md;
+    }
+
+    @include lg {
+        display: none;
+    }
+
+    &.is-open {
+        transform: translateX(0);
+    }
+
+    .nav-menu {
+        @include reset-list;
+
+        > li {
+            border-bottom: $border-width $border-style $color-border;
+
+            > a {
+                display: flex;
+                align-items: center;
+                padding: $spacing-4;
+                color: $color-text;
+                font-size: $font-size-md;
+                font-weight: $font-weight-medium;
+                text-decoration: none;
+                transition: color $transition-base;
+
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+
+            &.current-menu-item > a {
+                color: $color-primary;
+            }
+        }
+    }
+
+    .sub-menu {
+        @include reset-list;
+        padding-left: $spacing-4;
+        border-top: $border-width $border-style $color-border;
+
+        a {
+            display: block;
+            padding: $spacing-3 $spacing-4;
+            color: $color-text-light;
+            text-decoration: none;
+            font-size: $font-size-sm;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+    }
+}
+
+// モバイルメニューオーバーレイ
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba($color-black, 0.5);
+    z-index: $z-header - 2;
+    backdrop-filter: blur(2px);
+
+    &.is-visible {
+        display: block;
+    }
+}

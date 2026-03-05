@@ -1,0 +1,24 @@
+// =============================================================================
+// Main SCSS Entry Point - 全スタイルを統合
+// =============================================================================
+
+// 1. 変数（最初に読み込む - グローバルスコープ）
+@import 'variables';
+
+// 2. ミックスイン
+@import 'mixins';
+
+// 3. ベーススタイル
+@import 'base/reset';
+@import 'base/typography';
+
+// 4. コンポーネント
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+
+// 5. レイアウト
+@import 'layouts/grid';
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/sidebar';
