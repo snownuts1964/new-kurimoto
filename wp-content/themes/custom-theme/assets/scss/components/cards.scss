@@ -1,0 +1,253 @@
+// =============================================================================
+// Cards - カードコンポーネント
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// ベースカード
+// -----------------------------------------------------------------------------
+.card {
+    @include card;
+    @include flex-column;
+    position: relative;
+    transition: box-shadow $transition-base, transform $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-2px);
+    }
+
+    // 画像エリア
+    &__image {
+        position: relative;
+        overflow: hidden;
+        border-radius: $radius-lg $radius-lg 0 0;
+        margin: -$spacing-6 -$spacing-6 0;
+        background-color: $color-gray-100;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-slow;
+        }
+    }
+
+    // 画像ホバーエフェクト
+    &:hover &__image img {
+        transform: scale(1.05);
+    }
+
+    // バッジ（カテゴリーなど）
+    &__badge {
+        position: absolute;
+        top: $spacing-3;
+        left: $spacing-3;
+        z-index: 1;
+    }
+
+    // ボディ
+    &__body {
+        @include flex-column;
+        flex: 1;
+        padding: $spacing-5 0 0;
+    }
+
+    // カテゴリー
+    &__category {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wider;
+        color: $color-primary;
+        text-decoration: none;
+        margin-bottom: $spacing-2;
+
+        &:hover {
+            color: $color-primary-dark;
+        }
+    }
+
+    // タイトル
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        line-height: $line-height-snug;
+        margin-bottom: $spacing-3;
+        color: $color-text;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+    }
+
+    // テキスト
+    &__text {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        line-height: $line-height-relaxed;
+        @include text-clamp(3);
+        margin-bottom: $spacing-4;
+    }
+
+    // メタ情報
+    &__meta {
+        @include flex(row, flex-start, center);
+        gap: $spacing-4;
+        font-size: $font-size-xs;
+        color: $color-text-muted;
+        margin-bottom: $spacing-3;
+    }
+
+    // フッター
+    &__footer {
+        margin-top: auto;
+        padding-top: $spacing-4;
+        border-top: $border-width $border-style $color-border;
+        @include flex-between;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 投稿カード（特化型）
+// -----------------------------------------------------------------------------
+.post-card {
+    @include card;
+    @include flex-column;
+    overflow: hidden;
+    transition: box-shadow $transition-base, transform $transition-base;
+
+    &:hover {
+        box-shadow: $shadow-lg;
+        transform: translateY(-3px);
+    }
+
+    &__thumbnail {
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        background-color: $color-gray-100;
+        margin: -$spacing-6 -$spacing-6 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-slow;
+        }
+    }
+
+    &:hover &__thumbnail img {
+        transform: scale(1.08);
+    }
+
+    &__body {
+        @include flex-column;
+        flex: 1;
+        padding-top: $spacing-5;
+    }
+
+    &__meta {
+        @include flex(row, flex-start, center, wrap);
+        gap: $spacing-2;
+        margin-bottom: $spacing-3;
+    }
+
+    &__category {
+        display: inline-block;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wider;
+        color: $color-primary;
+        background-color: rgba($color-primary, 0.08);
+        padding: $spacing-1 $spacing-2;
+        border-radius: $radius-sm;
+        text-decoration: none;
+        transition: background-color $transition-base;
+
+        &:hover {
+            background-color: rgba($color-primary, 0.15);
+        }
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        line-height: $line-height-snug;
+        margin-bottom: $spacing-3;
+
+        a {
+            color: $color-text;
+            text-decoration: none;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+    }
+
+    &__info {
+        @include flex(row, flex-start, center, wrap);
+        gap: $spacing-3;
+        font-size: $font-size-xs;
+        color: $color-text-muted;
+        margin-bottom: $spacing-3;
+    }
+
+    &__date,
+    &__author {
+        @include flex(row, flex-start, center);
+        gap: $spacing-1;
+    }
+
+    &__excerpt {
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        line-height: $line-height-relaxed;
+        @include text-clamp(3);
+        margin-bottom: $spacing-4;
+    }
+
+    &__footer {
+        margin-top: auto;
+        padding-top: $spacing-4;
+        border-top: $border-width $border-style $color-border;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ウィジェットカード
+// -----------------------------------------------------------------------------
+.widget-card {
+    background-color: $color-white;
+    border-radius: $radius-lg;
+    padding: $spacing-5;
+    border: $border-width $border-style $color-border;
+
+    & + & {
+        margin-top: $spacing-5;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 特集カード（横向き）
+// -----------------------------------------------------------------------------
+.card--horizontal {
+    flex-direction: row;
+
+    .card__image {
+        flex-shrink: 0;
+        width: 200px;
+        border-radius: $radius-lg 0 0 $radius-lg;
+        margin: -$spacing-6 0 -$spacing-6 -$spacing-6;
+    }
+
+    .card__body {
+        padding-top: 0;
+        padding-left: $spacing-5;
+    }
+}

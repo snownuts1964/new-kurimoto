@@ -1,0 +1,169 @@
+// =============================================================================
+// Footer - サイトフッター
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// フッター全体
+// -----------------------------------------------------------------------------
+.site-footer {
+    background-color: $color-footer-bg;
+    color: $color-footer-text;
+    margin-top: auto;
+}
+
+// -----------------------------------------------------------------------------
+// フッターウィジェットエリア
+// -----------------------------------------------------------------------------
+.footer-widgets {
+    padding: $spacing-16 0;
+    border-bottom: 1px solid rgba($color-white, 0.1);
+
+    &__grid {
+        display: grid;
+        gap: $spacing-8;
+
+        @include md {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include lg {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    &__col {
+        // ウィジェットタイトル
+        .widget-title {
+            font-size: $font-size-base;
+            font-weight: $font-weight-bold;
+            color: $color-white;
+            text-transform: uppercase;
+            letter-spacing: $letter-spacing-wider;
+            margin-bottom: $spacing-5;
+            padding-bottom: $spacing-3;
+            border-bottom: 2px solid $color-primary;
+            display: inline-block;
+        }
+
+        // ウィジェット内のリンク
+        a {
+            color: $color-footer-text;
+            text-decoration: none;
+            transition: color $transition-base;
+
+            &:hover {
+                color: $color-white;
+            }
+        }
+
+        // ウィジェット内のリスト
+        ul {
+            @include reset-list;
+
+            li {
+                padding: $spacing-2 0;
+                border-bottom: 1px solid rgba($color-white, 0.06);
+                font-size: $font-size-sm;
+
+                &:first-child {
+                    padding-top: 0;
+                }
+
+                &:last-child {
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+            }
+        }
+
+        // テキストウィジェット
+        p {
+            font-size: $font-size-sm;
+            line-height: $line-height-relaxed;
+            color: $color-footer-text;
+            margin-bottom: $spacing-3;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// フッターナビゲーション
+// -----------------------------------------------------------------------------
+.footer-navigation {
+    padding: $spacing-5 0;
+    border-bottom: 1px solid rgba($color-white, 0.1);
+
+    .footer-menu {
+        @include reset-list;
+        @include flex(row, center, center, wrap);
+        gap: $spacing-2 $spacing-4;
+
+        @include md {
+            justify-content: flex-start;
+        }
+
+        a {
+            font-size: $font-size-sm;
+            color: $color-gray-400;
+            text-decoration: none;
+            transition: color $transition-base;
+            padding: $spacing-1 0;
+
+            &:hover {
+                color: $color-white;
+            }
+        }
+
+        li.current-menu-item a {
+            color: $color-white;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// サイト情報（コピーライト）
+// -----------------------------------------------------------------------------
+.site-info {
+    padding: $spacing-6 0;
+
+    &__inner {
+        @include flex(column, flex-start, flex-start);
+        gap: $spacing-2;
+
+        @include md {
+            @include flex-between;
+            flex-direction: row;
+        }
+    }
+
+    .copyright {
+        font-size: $font-size-sm;
+        color: $color-gray-400;
+        margin-bottom: 0;
+
+        a {
+            color: $color-gray-300;
+            text-decoration: none;
+            font-weight: $font-weight-medium;
+
+            &:hover {
+                color: $color-white;
+            }
+        }
+    }
+
+    .powered-by {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+        margin-bottom: 0;
+
+        a {
+            color: $color-gray-400;
+            text-decoration: none;
+
+            &:hover {
+                color: $color-white;
+            }
+        }
+    }
+}

@@ -1,0 +1,244 @@
+// =============================================================================
+// Buttons - ボタンコンポーネント
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// ベーススタイル
+// -----------------------------------------------------------------------------
+.btn {
+    @include btn-base;
+    @include focus-ring;
+
+    // サイズバリアント
+    &--sm {
+        padding: $spacing-2 $spacing-4;
+        font-size: $font-size-sm;
+        border-radius: $radius-md;
+    }
+
+    &--md {
+        padding: $spacing-3 $spacing-6;
+        font-size: $font-size-base;
+    }
+
+    &--lg {
+        padding: $spacing-4 $spacing-8;
+        font-size: $font-size-md;
+        border-radius: $radius-lg;
+    }
+
+    &--xl {
+        padding: $spacing-5 $spacing-10;
+        font-size: $font-size-lg;
+        border-radius: $radius-lg;
+    }
+
+    // フルワイド
+    &--full {
+        width: 100%;
+        justify-content: center;
+    }
+
+    // 角丸
+    &--rounded {
+        border-radius: $radius-full;
+    }
+
+    // アイコンのみ
+    &--icon {
+        padding: $spacing-3;
+        border-radius: $radius-base;
+        line-height: 1;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// カラーバリアント
+// -----------------------------------------------------------------------------
+.btn--primary {
+    @include btn-variant(
+        $color-primary,
+        $color-white,
+        transparent,
+        $color-primary-dark,
+        $color-white
+    );
+    box-shadow: 0 1px 3px rgba($color-primary, 0.4);
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: 0 4px 12px rgba($color-primary, 0.4);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+.btn--secondary {
+    @include btn-variant(
+        $color-secondary,
+        $color-white,
+        transparent,
+        $color-secondary-dark,
+        $color-white
+    );
+    box-shadow: 0 1px 3px rgba($color-secondary, 0.4);
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: 0 4px 12px rgba($color-secondary, 0.4);
+        transform: translateY(-1px);
+    }
+}
+
+.btn--accent {
+    @include btn-variant(
+        $color-accent,
+        $color-white,
+        transparent,
+        $color-accent-dark
+    );
+}
+
+.btn--white {
+    @include btn-variant(
+        $color-white,
+        $color-gray-800,
+        transparent,
+        $color-gray-100
+    );
+    box-shadow: $shadow-md;
+}
+
+.btn--dark {
+    @include btn-variant(
+        $color-gray-800,
+        $color-white,
+        transparent,
+        $color-gray-900
+    );
+}
+
+// アウトラインバリアント
+.btn--outline-primary {
+    @include btn-variant(
+        transparent,
+        $color-primary,
+        $color-primary,
+        $color-primary,
+        $color-white
+    );
+}
+
+.btn--outline-secondary {
+    @include btn-variant(
+        transparent,
+        $color-secondary,
+        $color-secondary,
+        $color-secondary,
+        $color-white
+    );
+}
+
+.btn--outline-white {
+    @include btn-variant(
+        transparent,
+        $color-white,
+        $color-white,
+        rgba($color-white, 0.15)
+    );
+}
+
+// ゴーストバリアント（背景なし）
+.btn--ghost {
+    @include btn-variant(
+        transparent,
+        $color-gray-700,
+        transparent,
+        $color-gray-100
+    );
+}
+
+.btn--ghost-primary {
+    @include btn-variant(
+        transparent,
+        $color-primary,
+        transparent,
+        rgba($color-primary, 0.1)
+    );
+}
+
+// テキストのみ
+.btn--text {
+    @include btn-reset;
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+        color: $color-primary-dark;
+    }
+}
+
+// 危険アクション
+.btn--danger {
+    @include btn-variant(
+        $color-error,
+        $color-white,
+        transparent,
+        darken($color-error, 10%)
+    );
+}
+
+// -----------------------------------------------------------------------------
+// WordPress 標準ボタンへの適用
+// -----------------------------------------------------------------------------
+.wp-block-button__link,
+input[type="submit"],
+button[type="submit"],
+.comment-reply-link {
+    @include btn-base;
+    @include btn-variant($color-primary, $color-white, transparent, $color-primary-dark);
+    @include focus-ring;
+    text-decoration: none;
+}
+
+// ページネーション
+.page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 $spacing-3;
+    border-radius: $radius-base;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    text-decoration: none;
+    transition: all $transition-base;
+    border: $border-width $border-style $color-border;
+    color: $color-text;
+
+    &:hover {
+        background-color: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+    }
+
+    &.current {
+        background-color: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+        font-weight: $font-weight-bold;
+    }
+
+    &.prev,
+    &.next {
+        font-weight: $font-weight-bold;
+    }
+}

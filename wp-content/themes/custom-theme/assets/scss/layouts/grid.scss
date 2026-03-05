@@ -1,0 +1,387 @@
+// =============================================================================
+// Grid - グリッドレイアウト
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// コンテナ
+// -----------------------------------------------------------------------------
+.container {
+    @include container;
+}
+
+.container-sm  { @include container(640px); }
+.container-md  { @include container(768px); }
+.container-lg  { @include container(1024px); }
+.container-xl  { @include container(1280px); }
+.container-full { @include container(100%); }
+
+// -----------------------------------------------------------------------------
+// サイトコンテンツレイアウト
+// -----------------------------------------------------------------------------
+.site-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+// コンテンツ + サイドバーレイアウト
+.content-area {
+    flex: 1;
+    min-width: 0;
+}
+
+.site-main {
+    padding: $spacing-10 0;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8;
+
+        @include lg {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: $spacing-10;
+        }
+    }
+}
+
+// サイドバーありレイアウト
+.has-sidebar {
+    .site-main .container {
+        @include lg {
+            .content-area {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .widget-area {
+                width: $sidebar-width;
+                flex-shrink: 0;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 投稿グリッド
+// -----------------------------------------------------------------------------
+.posts-grid {
+    display: grid;
+    gap: $spacing-6;
+    grid-template-columns: 1fr;
+
+    @include md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include xl {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// 2カラムグリッド
+.grid-2 {
+    display: grid;
+    gap: $spacing-6;
+    grid-template-columns: 1fr;
+
+    @include md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// 3カラムグリッド
+.grid-3 {
+    display: grid;
+    gap: $spacing-6;
+    grid-template-columns: 1fr;
+
+    @include sm {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include lg {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// 4カラムグリッド
+.grid-4 {
+    display: grid;
+    gap: $spacing-6;
+    grid-template-columns: repeat(2, 1fr);
+
+    @include md {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include lg {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+// オートグリッド
+.grid-auto {
+    @include grid-auto(280px);
+}
+
+// -----------------------------------------------------------------------------
+// ページネーション
+// -----------------------------------------------------------------------------
+.pagination {
+    margin-top: $spacing-10;
+    @include flex(row, center, center, wrap);
+    gap: $spacing-2;
+
+    .nav-links {
+        @include flex(row, center, center, wrap);
+        gap: $spacing-2;
+    }
+}
+
+// 前後ナビゲーション（single.php）
+.post-navigation {
+    margin-top: $spacing-10;
+    padding-top: $spacing-8;
+    border-top: $border-width $border-style $color-border;
+
+    .nav-links {
+        display: grid;
+        gap: $spacing-4;
+
+        @include md {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .nav-previous,
+    .nav-next {
+        background-color: $color-white;
+        border: $border-width $border-style $color-border;
+        border-radius: $radius-lg;
+        padding: $spacing-5;
+        transition: border-color $transition-base, box-shadow $transition-base;
+
+        &:hover {
+            border-color: $color-primary;
+            box-shadow: $shadow-md;
+        }
+
+        a {
+            text-decoration: none;
+            @include flex-column;
+            gap: $spacing-2;
+        }
+    }
+
+    .nav-next {
+        text-align: right;
+        @include md {
+            justify-self: end;
+        }
+
+        a {
+            align-items: flex-end;
+        }
+    }
+
+    .nav-subtitle {
+        font-size: $font-size-xs;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing-wider;
+        color: $color-text-muted;
+        font-weight: $font-weight-bold;
+    }
+
+    .nav-title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        color: $color-text;
+        @include text-clamp(2);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// エントリーレイアウト（single/page）
+// -----------------------------------------------------------------------------
+.single-post,
+.page-content {
+    max-width: 100%;
+
+    .entry-header {
+        margin-bottom: $spacing-8;
+    }
+
+    .entry-title {
+        font-size: $font-size-2xl;
+        font-family: $font-secondary;
+        line-height: $line-height-tight;
+        margin-bottom: $spacing-4;
+
+        @include md {
+            font-size: $font-size-3xl;
+        }
+    }
+
+    .entry-meta {
+        @include flex(row, flex-start, center, wrap);
+        gap: $spacing-4;
+        font-size: $font-size-sm;
+        color: $color-text-light;
+        margin-top: $spacing-4;
+
+        svg {
+            flex-shrink: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                color: $color-primary;
+            }
+        }
+
+        > * {
+            @include flex(row, flex-start, center);
+            gap: $spacing-2;
+        }
+    }
+
+    .entry-thumbnail {
+        margin-bottom: $spacing-8;
+        border-radius: $radius-xl;
+        overflow: hidden;
+        box-shadow: $shadow-lg;
+        aspect-ratio: 16 / 9;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .entry-content {
+        font-size: $font-size-base;
+        line-height: $line-height-relaxed;
+
+        @include md {
+            font-size: $font-size-md;
+        }
+
+        > * + * {
+            margin-top: $spacing-4;
+        }
+
+        h2, h3, h4 {
+            margin-top: $spacing-10;
+        }
+    }
+
+    .entry-footer {
+        margin-top: $spacing-8;
+        padding-top: $spacing-6;
+        border-top: $border-width $border-style $color-border;
+    }
+
+    .entry-categories,
+    .entry-tags {
+        @include flex(row, flex-start, center, wrap);
+        gap: $spacing-2;
+        margin-bottom: $spacing-3;
+
+        &__label {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            color: $color-text-light;
+        }
+    }
+
+    .entry-category,
+    .entry-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: $spacing-1 $spacing-3;
+        border-radius: $radius-full;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium;
+        text-decoration: none;
+        transition: all $transition-base;
+    }
+
+    .entry-category {
+        background-color: rgba($color-primary, 0.1);
+        color: $color-primary;
+
+        &:hover {
+            background-color: $color-primary;
+            color: $color-white;
+        }
+    }
+
+    .entry-tag {
+        background-color: $color-gray-100;
+        color: $color-text-light;
+        border: $border-width $border-style $color-border;
+
+        &:hover {
+            background-color: $color-primary;
+            color: $color-white;
+            border-color: $color-primary;
+        }
+    }
+
+    .edit-link a {
+        @include btn-base($spacing-2, $spacing-4);
+        @include btn-variant(transparent, $color-text-light, $color-border, $color-gray-100);
+        font-size: $font-size-sm;
+        text-decoration: none;
+        border-radius: $radius-md;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// 404 / no-results
+// -----------------------------------------------------------------------------
+.no-results {
+    text-align: center;
+    padding: $spacing-20 0;
+
+    .page-header {
+        margin-bottom: $spacing-6;
+    }
+
+    .page-title {
+        font-size: $font-size-2xl;
+        color: $color-text;
+    }
+
+    .page-content {
+        max-width: 480px;
+        margin: 0 auto;
+
+        p {
+            color: $color-text-light;
+            margin-bottom: $spacing-6;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// ページヘッダー
+// -----------------------------------------------------------------------------
+.page-header {
+    margin-bottom: $spacing-8;
+
+    .page-title {
+        font-size: $font-size-2xl;
+        font-family: $font-secondary;
+
+        @include md {
+            font-size: $font-size-3xl;
+        }
+    }
+}
